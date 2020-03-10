@@ -1,0 +1,4 @@
+TOKEN <token>
+CHATID <chat_id>
+
+# Replace <token> and <chat_id> with your telegram token and chat_id
