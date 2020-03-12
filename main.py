@@ -13,13 +13,16 @@ options.headless = True
 browser = webdriver.Firefox(options=options)
 browser.get('https://www.vlive.tv/video/' + vliveNum)
 delay = 5
-# vliveNum = input("Please Enter the video id: ") 
 
-try:
-    myElem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.CLASS_NAME, 'u_rmc_ly_inner')))
-    print("Page is ready!")
-except TimeoutException:
-    print("Loading took too much time!")
+myElem = None
+while myElem == None:
+    try:
+        myElem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.CLASS_NAME, 'u_rmc_ly_inner')))
+        print("Page is ready!")
+    except TimeoutException:
+        print("Loading took too much time!")
+        browser.refresh()
+        print("refresh: " + browser.current_url)
 
 html = browser.page_source
 soup = BeautifulSoup(html, 'lxml')
@@ -31,8 +34,4 @@ for tag in soup.find_all("span", class_='u_rmc_lang'):
         telebot.send_text(title + '\n' + 'English subtitle is ready!')
     elif '中文' in tag.text:
         telebot.send_text(title + '\n' + tag.text + '已更新')
-        
 
-# soup = BeautifulSoup(r.text, 'html.parser')
-
-# print(soup.find_all('span', class_="u_option_select"))
