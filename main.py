@@ -31,7 +31,6 @@ soup = BeautifulSoup(html, 'lxml')
 title = soup.find("strong", class_='tit', attrs={'title':True})['title']
 print(title)
 for tag in soup.find_all("span", class_='u_rmc_lang'):
-    print(tag.text)
     if tag.text == 'English':
         telebot.send_text(title + '\n' + 'English subtitle is ready!')
     elif '中文' in tag.text:
