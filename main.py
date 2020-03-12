@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
 import telebot
+import time
 
 vliveNum = input("Please input video ID: ")
 options = Options()
@@ -21,6 +22,7 @@ while myElem == None:
         print("Page is ready!")
     except TimeoutException:
         print("Loading took too much time!")
+        time.sleep(1800)
         browser.refresh()
         print("refresh: " + browser.current_url)
 
